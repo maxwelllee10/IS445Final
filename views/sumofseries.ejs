@@ -1,0 +1,67 @@
+<%- include("_header") -%>
+
+<h5>Calculate Sum of a Series Divisible by a Number</h5>
+<h1>Description: The program will calculate the sum of the numbers beginning at the starting number and ending at the ending number that are divisible ny the given number</h1>
+
+<h2>Example
+  Starting number = 1
+  ending number = 13
+  Divisible by 3
+  The sum is 30(3 + 6 + 9 + 12)
+</h2>
+
+<form action="/sum" method="POST">
+    <table>
+        <tr>
+            <td><label for="start">Enter Starting #</label>:</td>
+            <td><input type="number" name="snumber" id="startVal" /></td>
+            <td>(required)</td>
+        </tr>
+        <tr>
+            <td><label for="end">Enter Ending # </label>:</td>
+            <td><input type="number" name="enumber" id="endVal" /></td>
+            <td>(required)</td>
+        </tr>
+        <tr>
+            <td><label for="Div">Divisble By</label>:</td>
+            <td><input type="number" name="dnumber" id="div_val"/></td>
+            <td>(required)</td>
+        </tr>
+        </tr>
+        <td span="2">
+            <input type="submit" value="Calculate Sum" />
+            </td>
+        </tr>
+    </table>
+</form>
+<script>
+    document.querySelector("form").addEventListener("submit", e => {
+      e.preventDefault();
+
+app.post("/post", (req, res) => {
+    function calcSum(start, end, divis){
+      output = 0
+      for (let i = start; i <= end; i++) {
+          
+          if(i % divis == 0){
+              output += i
+          }
+      }
+      return output
+  }
+  const output = document.getElementById("result");
+  const formData = new FormData(e.target);
+      fetch("/sum", {
+    })
+    .then(response => response.json())
+    .then(result => {
+        output.innerHTML = "";
+
+        console.log(`The sum of the numbers from ${startVal} to ${endVal} that are divisible by ${div_val} is ${output}`)
+  console.log(calcSum(parseInt(startVal), parseInt(endVal), parseInt(div_val)))
+    });
+})
+})
+</script>
+
+<%- include("_footer") -%>

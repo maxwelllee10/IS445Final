@@ -1,0 +1,46 @@
+<%- include("_header") -%>
+
+<h1>Import E-Vehicles</h1>
+
+<h4>Total number of records in the database: <%= totRecs %></h4>
+
+<h5>Select a file with electric vehicles for the database insert</h5>
+
+<form>
+    <input type="file" name="filename" required title="Please fill out this field"><p></p>
+    <input type="submit">
+</form>
+<p id="result"></p>
+
+<script>
+    document.querySelector("form").addEventListener("submit", e => {
+      e.preventDefault();
+    const output = document.getElementById("result");
+        output.innerHTML = "Waiting for ....";
+      
+      const formData = new FormData(e.target);
+      fetch("/import", {
+        method: "POST",
+        body: formData
+      })
+    .then(response => response.json())
+    .then(result => {
+        output.innerHTML = "";
+
+        let myOutputString = '<br>Number of records inserted: </br>' + result.recordsInsertedSuccessfully;
+
+        myOutputString += '<br>Number of records not inserted:' + result.recordsNotInserted;
+
+        myOutputString += '<br>total records:' + result.totRecs;
+
+        myOutputString += '<br>total records processed:' + result.totalRecordsProcessed;
+
+
+        myOutputString += '<br>errors:' + result.errors;
+
+        output.innerHTML = myOutputString;
+        });
+    });
+    </script>
+
+<%- include("_footer") -%>
